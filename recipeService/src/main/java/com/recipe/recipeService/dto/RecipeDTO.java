@@ -1,20 +1,13 @@
-package com.recipe.recipeService.model;
+package com.recipe.recipeService.dto;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
-@Table(name = "recipe")
-@Entity
-public class Recipe implements Serializable {
+public class RecipeDTO implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "name")
     private String name;
-
 
     public Long getId() {
         return id;
@@ -36,8 +29,8 @@ public class Recipe implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Recipe recipe = (Recipe) o;
-        return Objects.equals(id, recipe.id) && Objects.equals(name, recipe.name);
+        RecipeDTO recipeDTO = (RecipeDTO) o;
+        return Objects.equals(id, recipeDTO.id) && Objects.equals(name, recipeDTO.name);
     }
 
     @Override
@@ -47,7 +40,7 @@ public class Recipe implements Serializable {
 
     @Override
     public String toString() {
-        return "Recipe{" +
+        return "RecipeDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 '}';
