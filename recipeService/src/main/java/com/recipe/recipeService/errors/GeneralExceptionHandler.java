@@ -12,4 +12,9 @@ public class GeneralExceptionHandler {
     public ResponseEntity<?> handleBadRequestAlertException(BadRequestAlertException exception){
         return new ResponseEntity<>(exception.getMessage() , HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(BadRequestAlertException.class)
+    public ResponseEntity<?> handleException(BadRequestAlertException exception){
+        return new ResponseEntity<>(exception.getExceptionMessage() , HttpStatus.NOT_FOUND);
+    }
 }
