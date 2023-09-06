@@ -9,6 +9,7 @@ import com.recipe.ingredientservice.repository.IngredientRepository;
 import com.recipe.ingredientservice.service.IngredientService;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
