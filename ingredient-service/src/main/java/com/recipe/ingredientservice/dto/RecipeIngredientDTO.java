@@ -3,6 +3,7 @@ package com.recipe.ingredientservice.dto;
 public class RecipeIngredientDTO {
     private Long id;
     private Long recipeId;
+    private String amount;
     private IngredientDTO ingredient;
 
     public Long getId() {
@@ -27,5 +28,13 @@ public class RecipeIngredientDTO {
 
     public void setIngredient(IngredientDTO ingredient) {
         this.ingredient = ingredient;
+    }
+
+    public String getAmount() {
+        return amount;
+    }
+
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 }
