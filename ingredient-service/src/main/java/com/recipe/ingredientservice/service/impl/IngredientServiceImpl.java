@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -43,7 +44,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
-    public List<IngredientDTO> findAllIds(List<Long> ids) {
+    public List<IngredientDTO> findAllIds(Set<Long> ids) {
         return ingredientRepository.findAllById(ids)
                 .stream()
                 .map(ingredientMapper::toDto)

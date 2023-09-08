@@ -1,20 +1,13 @@
 package com.recipe.ingredientservice.dto;
 
+import java.util.HashMap;
 import java.util.List;
 
 public class CreateRecipeIngredientRequest {
 
-    private Long id;
     private Long recipeId;
-    private List<Long> ingredients;
+    private HashMap<Long ,String> ingredients;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public Long getRecipeId() {
         return recipeId;
@@ -24,11 +17,11 @@ public class CreateRecipeIngredientRequest {
         this.recipeId = recipeId;
     }
 
-    public List<Long> getIngredients() {
+    public HashMap<Long, String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Long> ingredients) {
+    public void setIngredients(HashMap<Long, String> ingredients) {
         this.ingredients = ingredients;
     }
 }
