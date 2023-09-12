@@ -8,13 +8,14 @@ import com.recipe.ingredientservice.model.Ingredient;
 import com.recipe.ingredientservice.repository.IngredientRepository;
 import com.recipe.ingredientservice.service.IngredientService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class IngredientServiceImpl implements IngredientService {
 
     private final IngredientRepository ingredientRepository;
@@ -28,7 +29,6 @@ public class IngredientServiceImpl implements IngredientService {
     @Override
     public IngredientDTO save(CreateIngredientRequest ingredientRequest) {
         IngredientDTO ingredientDTO = new IngredientDTO();
-//        ingredientDTO.setId(null);
         ingredientDTO.setName(ingredientRequest.getName());
         ingredientDTO.setCategory(ingredientRequest.getCategory());
         Ingredient ingredient = ingredientMapper.toEntity(ingredientDTO);
@@ -37,6 +37,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public IngredientDTO findOneById(Long id) {
         return ingredientRepository.findById(id)
                 .map(ingredientMapper::toDto)
@@ -44,6 +45,7 @@ public class IngredientServiceImpl implements IngredientService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<IngredientDTO> findAllIds(Set<Long> ids) {
         return ingredientRepository.findAllById(ids)
                 .stream()
