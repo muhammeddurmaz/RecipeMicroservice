@@ -5,6 +5,7 @@ import java.util.Objects;
 
 
 @Table(name = "recipe_ingredient")
+@Entity
 public class RecipeIngredient {
 
     @Id
