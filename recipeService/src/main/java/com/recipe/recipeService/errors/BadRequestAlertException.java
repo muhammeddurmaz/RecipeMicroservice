@@ -2,6 +2,7 @@ package com.recipe.recipeService.errors;
 
 public class BadRequestAlertException extends RuntimeException{
     private ExceptionMessage exceptionMessage;
+
     public BadRequestAlertException(String message){
         super(message);
     }
