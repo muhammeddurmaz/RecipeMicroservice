@@ -1,7 +1,9 @@
 package com.recipe.recipeService.controller;
 
+import com.recipe.recipeService.dto.CreateRecipeRequest;
 import com.recipe.recipeService.dto.RecipeDTO;
 import com.recipe.recipeService.dto.ResponseDTO;
+import com.recipe.recipeService.dto.ViewRecipeIngredientRequest;
 import com.recipe.recipeService.service.RecipeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,9 +19,9 @@ public class RecipeController {
     }
 
     @PostMapping("/recipe")
-    public ResponseEntity<ResponseDTO<RecipeDTO>> save(@RequestBody RecipeDTO recipeDTO){
-        RecipeDTO savedEntity = recipeService.save(recipeDTO);
-        ResponseDTO<RecipeDTO> responseDTO = new ResponseDTO<>();
+    public ResponseEntity<ResponseDTO<ViewRecipeIngredientRequest>> save(@RequestBody CreateRecipeRequest createRecipeRequest){
+        ViewRecipeIngredientRequest savedEntity = recipeService.save(createRecipeRequest);
+        ResponseDTO<ViewRecipeIngredientRequest> responseDTO = new ResponseDTO<>();
         responseDTO.setData(savedEntity);
         responseDTO.setMessage("Create Success",ENTITY_NAME);
         responseDTO.setSuccess(true);
