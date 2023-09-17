@@ -1,11 +1,11 @@
 package com.recipe.recipeService.dto;
 
-import java.util.List;
+import java.util.HashMap;
 
 public class ViewRecipeDetail {
     private Long id;
     private String name;
-    private List<String> ingredients;
+    private HashMap<String,String> ingredients;
 
     public Long getId() {
         return id;
@@ -23,11 +23,11 @@ public class ViewRecipeDetail {
         this.name = name;
     }
 
-    public List<String> getIngredients() {
+    public HashMap<String, String> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<String> ingredients) {
+    public void setIngredients(HashMap<String, String> ingredients) {
         this.ingredients = ingredients;
     }
 }
