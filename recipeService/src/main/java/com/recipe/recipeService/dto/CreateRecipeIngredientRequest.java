@@ -2,7 +2,7 @@ package com.recipe.recipeService.dto;
 
 import java.util.HashMap;
 
-public class CreateRecipeIngredientRequest {
+public class  CreateRecipeIngredientRequest {
 
     private Long recipeId;
     private HashMap<Long ,String> ingredients;
