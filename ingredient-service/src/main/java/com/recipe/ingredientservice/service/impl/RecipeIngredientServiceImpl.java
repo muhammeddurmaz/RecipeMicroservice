@@ -1,9 +1,6 @@
 package com.recipe.ingredientservice.service.impl;
 
-import com.recipe.ingredientservice.dto.CreateRecipeIngredientRequest;
-import com.recipe.ingredientservice.dto.IngredientDTO;
-import com.recipe.ingredientservice.dto.RecipeIngredientDTO;
-import com.recipe.ingredientservice.dto.ViewRecipeIngredientRequest;
+import com.recipe.ingredientservice.dto.*;
 import com.recipe.ingredientservice.dto.mapper.RecipeIngredientMapper;
 import com.recipe.ingredientservice.repository.RecipeIngredientRepository;
 import com.recipe.ingredientservice.service.IngredientService;
@@ -11,6 +8,7 @@ import com.recipe.ingredientservice.service.RecipeIngredientService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -31,22 +29,20 @@ public class RecipeIngredientServiceImpl implements RecipeIngredientService {
     @Override
     public ViewRecipeIngredientRequest saveRecipeIngredient(CreateRecipeIngredientRequest request) {
         ViewRecipeIngredientRequest viewRecipeIngredientRequest = new ViewRecipeIngredientRequest();
-        viewRecipeIngredientRequest.setIngredients(new HashMap<String ,String>());
-        HashMap<Long,String> ingredients = request.getIngredients();
 
-        for(Long id : ingredients.keySet()){
-            IngredientDTO ingredientDTO = ingredientService.findOneById(id);
+
+        for(RecipeIngredientAmountDTO recipeAmount : request.getIngredients()){
 
             RecipeIngredientDTO recipeIngredientDTO = new RecipeIngredientDTO();
             recipeIngredientDTO.setRecipeId(request.getRecipeId());
-            recipeIngredientDTO.setIngredient(ingredientDTO);
-            String amount = ingredients.get(id);
+            recipeIngredientDTO.setIngredient(recipeAmount.getIngredient());
+            String amount = recipeAmount.getAmount();
             recipeIngredientDTO.setAmount(amount);
 
             recipeIngredientRepository.save(recipeIngredientMapper.toEntity(recipeIngredientDTO));
-            viewRecipeIngredientRequest.getIngredients().put(ingredientDTO.getName(),amount);
-        }
 
+        }
+        viewRecipeIngredientRequest.setIngredients(request.getIngredients());
         viewRecipeIngredientRequest.setRecipeId(request.getRecipeId());
         return viewRecipeIngredientRequest;
     }
@@ -54,14 +50,23 @@ public class RecipeIngredientServiceImpl implements RecipeIngredientService {
     @Override
     @Transactional(readOnly = true)
     public ViewRecipeIngredientRequest getRecipeIngredients(Long recipeId) {
+
         List<RecipeIngredientDTO> recipeIngredients =  recipeIngredientRepository.findByRecipeId(recipeId)
                 .stream()
                 .map(recipeIngredientMapper::toDto).collect(Collectors.toList());
 
         ViewRecipeIngredientRequest viewRecipeIngredientRequest = new ViewRecipeIngredientRequest();
-        viewRecipeIngredientRequest.setIngredients(new HashMap<String,String>());
-        recipeIngredients.forEach(dto -> viewRecipeIngredientRequest.getIngredients().put(dto.getIngredient().getName(),dto.getAmount()));
+        List<RecipeIngredientAmountDTO> recipeAmountList = new ArrayList<>();
+
+        recipeIngredients.forEach(dto -> {
+            RecipeIngredientAmountDTO recipeAmountDTO = new RecipeIngredientAmountDTO();
+            recipeAmountDTO.setAmount(dto.getAmount());
+            recipeAmountDTO.setIngredient(dto.getIngredient());
+            recipeAmountList.add(recipeAmountDTO);
+        });
+
         viewRecipeIngredientRequest.setRecipeId(recipeId);
+        viewRecipeIngredientRequest.setIngredients(recipeAmountList);
 
         return viewRecipeIngredientRequest;
     }
