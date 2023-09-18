@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ingredient-service" />
+        <module name="recipe-search-service" />
         <module name="recipeService" />
         <module name="eureka-server" />
         <module name="gateway-service" />
@@ -18,6 +19,7 @@
       <module name="eureka-server" options="-parameters" />
       <module name="gateway-service" options="-parameters" />
       <module name="ingredient-service" options="-parameters" />
+      <module name="recipe-search-service" options="-parameters" />
       <module name="recipeService" options="-parameters" />
     </option>
   </component>

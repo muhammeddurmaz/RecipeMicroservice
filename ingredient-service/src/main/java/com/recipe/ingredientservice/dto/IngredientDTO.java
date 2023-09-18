@@ -6,7 +6,6 @@ import java.util.Objects;
 public class IngredientDTO implements Serializable {
     private Long id;
     private String name;
-    private CategoryDTO category;
 
     public Long getId() {
         return id;
@@ -24,25 +23,18 @@ public class IngredientDTO implements Serializable {
         this.name = name;
     }
 
-    public CategoryDTO getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryDTO category) {
-        this.category = category;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         IngredientDTO that = (IngredientDTO) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(category, that.category);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, category);
+        return Objects.hash(id, name);
     }
 
     @Override
@@ -50,7 +42,6 @@ public class IngredientDTO implements Serializable {
         return "IngredientDTO{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", category=" + category +
                 '}';
     }
 }
