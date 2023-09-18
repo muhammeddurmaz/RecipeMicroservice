@@ -30,7 +30,6 @@ public class IngredientServiceImpl implements IngredientService {
     public IngredientDTO save(CreateIngredientRequest ingredientRequest) {
         IngredientDTO ingredientDTO = new IngredientDTO();
         ingredientDTO.setName(ingredientRequest.getName());
-        ingredientDTO.setCategory(ingredientRequest.getCategory());
         Ingredient ingredient = ingredientMapper.toEntity(ingredientDTO);
         ingredient = ingredientRepository.save(ingredient);
         return ingredientMapper.toDto(ingredient);

@@ -15,10 +15,6 @@ public class Ingredient implements Serializable {
 
     @Column(name = "name",unique = true,nullable = false)
     private String name;
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    @JsonIgnoreProperties
-    private Category category;
 
 
     public Long getId() {
@@ -37,25 +33,18 @@ public class Ingredient implements Serializable {
         this.name = name;
     }
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Ingredient that = (Ingredient) o;
-        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(category, that.category);
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, category);
+        return Objects.hash(id, name);
     }
 
     @Override
@@ -63,7 +52,6 @@ public class Ingredient implements Serializable {
         return "Ingredient{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", category=" + category +
                 '}';
     }
 }
