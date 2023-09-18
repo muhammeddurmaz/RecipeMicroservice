@@ -15,12 +15,5 @@
       <jdbc-url>jdbc:postgresql://localhost:5433/recipe-service</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="ingredient-service@localhost" uuid="abc12e31-cb8f-4f44-9aa1-e32c97bc6fc6">
-      <driver-ref>postgresql</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
-      <jdbc-url>jdbc:postgresql://localhost:5433/ingredient-service</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
   </component>
 </project>
