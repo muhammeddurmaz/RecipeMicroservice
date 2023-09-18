@@ -6,7 +6,6 @@ import java.util.Objects;
 public class CreateIngredientRequest implements Serializable {
     private String name;
 
-    private CategoryDTO category;
     public String getName() {
         return name;
     }
@@ -15,13 +14,6 @@ public class CreateIngredientRequest implements Serializable {
         this.name = name;
     }
 
-    public CategoryDTO getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryDTO category) {
-        this.category = category;
-    }
 
     @Override
     public boolean equals(Object o) {

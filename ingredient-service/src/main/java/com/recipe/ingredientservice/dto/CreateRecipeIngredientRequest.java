@@ -6,7 +6,7 @@ import java.util.List;
 public class CreateRecipeIngredientRequest {
 
     private Long recipeId;
-    private HashMap<Long ,String> ingredients;
+    private List<RecipeIngredientAmountDTO> ingredients;
 
 
     public Long getRecipeId() {
@@ -17,11 +17,11 @@ public class CreateRecipeIngredientRequest {
         this.recipeId = recipeId;
     }
 
-    public HashMap<Long, String> getIngredients() {
+    public List<RecipeIngredientAmountDTO> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(HashMap<Long, String> ingredients) {
+    public void setIngredients(List<RecipeIngredientAmountDTO> ingredients) {
         this.ingredients = ingredients;
     }
 }
