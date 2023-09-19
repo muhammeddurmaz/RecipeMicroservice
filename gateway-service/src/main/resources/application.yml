@@ -15,7 +15,7 @@ spring:
         - id: recipe-search-service
           uri: lb://recipe-search-service
           predicates:
-            - Path=/api/recipe/**
+            - Path=/recipe-search/**
       discovery:
         locator:
           enabled: true
