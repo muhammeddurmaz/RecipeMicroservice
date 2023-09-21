@@ -1,9 +1,10 @@
 package com.recipe.recipeService.dto;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 
-public class ViewRecipeIngredientRequest {
+public class ViewRecipeIngredientRequest implements Serializable {
 
     private Long recipeId;
     private List<RecipeIngredientAmount> ingredients;
