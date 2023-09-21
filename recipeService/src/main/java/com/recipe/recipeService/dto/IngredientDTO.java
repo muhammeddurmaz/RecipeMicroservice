@@ -1,6 +1,8 @@
 package com.recipe.recipeService.dto;
 
-public class IngredientDTO {
+import java.io.Serializable;
+
+public class IngredientDTO implements Serializable {
     private Long id;
     private String name;
 
