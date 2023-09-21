@@ -1,0 +1,29 @@
+#spring:
+#  jpa:
+#    hibernate:
+#      ddl-auto: update
+#  datasource:
+#    url:
+#    username:
+#    password:
+#
+#  application:
+#    name:
+#  profiles:
+#    active: default
+#
+#server:
+#  port: 0
+#eureka:
+#  instance:
+#    instance-id:
+#    prefer-ip-address: true
+#  client:
+#    service-url.default-zone:${}
+
+
+logging:
+  level:
+#    ROOT: DEBUG
+#    org.hibernate.sql: DEBUG
+    com.recipe : DEBUG
