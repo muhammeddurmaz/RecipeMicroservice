@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.recipe</groupId>
-	<artifactId>recipeService</artifactId>
+	<artifactId>recipe-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>recipeService</name>
 	<description>Demooo project for Spring Boot</description>
