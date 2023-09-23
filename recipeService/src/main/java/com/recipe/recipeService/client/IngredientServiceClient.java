@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @FeignClient(name = "ingredient-service",path = "/api")
 public interface IngredientServiceClient {
 
-    @PostMapping("recipe-ingredient")
+    @PostMapping("/recipe-ingredient")
     ResponseEntity<ResponseDTO<ViewRecipeIngredientRequest>> saveRecipeIngredient(@RequestBody CreateRecipeIngredientRequest request);
 
     @GetMapping("/recipe-ingredient/{id}")
