@@ -1,35 +1,37 @@
 package com.recipe.recipeService.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.recipe.recipeService.client.IngredientServiceClient;
+import com.recipe.recipeService.client.RecipeSearchServiceClient;
 import com.recipe.recipeService.dto.*;
 import com.recipe.recipeService.dto.mapper.RecipeMapper;
 import com.recipe.recipeService.errors.BadRequestAlertException;
 import com.recipe.recipeService.model.Recipe;
 import com.recipe.recipeService.repository.RecipeRepository;
 import com.recipe.recipeService.service.RecipeService;
-import org.springframework.kafka.core.KafkaTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.Objects;
+import java.util.Optional;
 
 @Service
 @Transactional
 public class RecipeServiceImpl implements RecipeService {
 
+    private final Logger logger = LoggerFactory.getLogger(RecipeServiceImpl.class);
     private final RecipeRepository recipeRepository;
     private final RecipeMapper recipeMapper;
     private final IngredientServiceClient ingredientServiceClient;
-    private final KafkaTemplate<String , byte[]> kafkaTemplate;
+    private final RecipeSearchServiceClient recipeSearchServiceClient;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeMapper recipeMapper, IngredientServiceClient ingredientServiceClient, KafkaTemplate<String , byte[]> kafkaTemplate) {
+    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeMapper recipeMapper, IngredientServiceClient ingredientServiceClient, RecipeSearchServiceClient recipeSearchServiceClient) {
         this.recipeRepository = recipeRepository;
         this.recipeMapper = recipeMapper;
         this.ingredientServiceClient = ingredientServiceClient;
-        this.kafkaTemplate = kafkaTemplate;
+        this.recipeSearchServiceClient = recipeSearchServiceClient;
     }
 
     @Override
@@ -49,22 +51,14 @@ public class RecipeServiceImpl implements RecipeService {
         viewRecipeDetail.setName(recipe.getName());
         viewRecipeDetail.setIngredients(resultRecipeIngredient.getIngredients());
 
-        ObjectMapper objectMapper = new ObjectMapper();
-        byte[] serializedObject;
-        try {
-            serializedObject = objectMapper.writeValueAsBytes(viewRecipeDetail);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
+        Runnable run = () -> saveRecipeSearch(viewRecipeDetail);
+        Thread thread = new Thread(run);
+        thread.start();
+//        recipeSearchServiceClient.saveRecipeSearch(viewRecipeDetail);
 
-
-        kafkaTemplate.send("recipe-detail-elasticsearch",serializedObject);
-
-//        ingredientRequest = null;
-//        resultRecipeIngredient = null;
-//        recipe = null;
         return viewRecipeDetail;
     }
+
 
     @Override
     @Transactional(readOnly = true)
@@ -72,5 +66,16 @@ public class RecipeServiceImpl implements RecipeService {
         return recipeRepository.findById(id)
                 .map(recipeMapper::toDto)
                 .orElseThrow(() -> new BadRequestAlertException("Recipe could not found by id " + id));
+    }
+
+    private void saveRecipeSearch(ViewRecipeDetail recipeDetail){
+        ViewRecipeDetail entity =  recipeSearchServiceClient.saveRecipeSearch(recipeDetail).getBody();
+        if (Objects.isNull(entity)){
+            Recipe db = recipeRepository.findById(recipeDetail.getId()).orElseThrow( () -> new BadRequestAlertException("Not Found"));
+            entity.setId(db.getId());
+            entity.setName(db.getName());
+            entity.setIngredients(recipeDetail.getIngredients());
+            saveRecipeSearch(entity);
+        }
     }
 }
