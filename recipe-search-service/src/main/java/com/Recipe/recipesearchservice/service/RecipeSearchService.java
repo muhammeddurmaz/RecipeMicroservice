@@ -13,4 +13,6 @@ public interface RecipeSearchService {
     List<ViewRecipeDetail> search(String query);
 
     Page<ViewRecipeDetail> findAll();
+
+    void delete(Long id);
 }
