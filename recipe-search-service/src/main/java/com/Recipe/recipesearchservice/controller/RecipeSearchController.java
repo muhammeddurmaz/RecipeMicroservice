@@ -35,4 +35,10 @@ public class RecipeSearchController {
         Page<ViewRecipeDetail> savedRecipe = recipeSearchService.findAll();
         return ResponseEntity.ok().body(savedRecipe);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteRecipeById(@PathVariable(name = "id") Long id){
+        recipeSearchService.delete(id);
+        return ResponseEntity.ok().body("Deleted Recipe By id : " + id);
+    }
 }
