@@ -49,5 +49,8 @@ public class RecipeSearchServiceImpl implements RecipeSearchService {
         return recipeSearchRepository.findAll(Pageable.unpaged());
     }
 
-
+    @Override
+    public void delete(Long id) {
+        recipeSearchRepository.deleteById(id);
+    }
 }
